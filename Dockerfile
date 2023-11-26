@@ -1,14 +1,14 @@
 # Use a base image that includes Maven and OpenJDK
 FROM maven:3.8.4-openjdk-17-slim
 
-# Set environment variables
-RUN . ./SetEnvironmentVariables.sh
-
 # Set the working directory
-WORKDIR $APP_DIRECTORY
+WORKDIR /app
 
 # Copy the source code from GitHub into the Docker image
-COPY . $APP_DIRECTORY
+COPY . /app
+
+# Set environment variables
+RUN . ./SetEnvironmentVariables.sh
 
 # Install TwsApi.jar
 RUN mvn install:install-file -Dfile=./lib/TwsApi.jar -DgroupId=com.ib -DartifactId=TwsApi -Dversion=1.0 -Dpackaging=jar
