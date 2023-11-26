@@ -1,4 +1,4 @@
-package haris.hamid.ibkrfacade;
+package haris.hamid.ibkrbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,9 +7,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication(exclude = { ErrorMvcAutoConfiguration.class })
-public class IbkrFacadeApplication {
+public class IbkrBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(IbkrFacadeApplication.class, args);
+        SpringApplication.run(IbkrBackendApplication.class, args);
     }
 }

@@ -1,6 +1,6 @@
-package haris.hamid.ibkrfacade.data;
+package haris.hamid.ibkrbackend.data;
 
-import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrbackend.data.holder.ContractHolder;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

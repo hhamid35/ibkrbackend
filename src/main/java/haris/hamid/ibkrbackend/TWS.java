@@ -1,19 +1,13 @@
-package haris.hamid.ibkrfacade;
+package haris.hamid.ibkrbackend;
 
 import com.ib.client.*;
-import haris.hamid.ibkrfacade.data.ContractRepository;
-import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
-import haris.hamid.ibkrfacade.data.holder.ContractHolder;
-import haris.hamid.ibkrfacade.data.holder.Option;
-import haris.hamid.ibkrfacade.data.holder.PositionHolder;
-import haris.hamid.ibkrfacade.service.OrderManagerService;
-import haris.hamid.ibkrfacade.data.ContractRepository;
-import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
-import haris.hamid.ibkrfacade.data.holder.ContractHolder;
-import haris.hamid.ibkrfacade.data.holder.Option;
-import haris.hamid.ibkrfacade.data.holder.PositionHolder;
-import haris.hamid.ibkrfacade.service.OrderManagerService;
-import haris.hamid.ibkrfacade.service.PositionManagerService;
+import haris.hamid.ibkrbackend.data.ContractRepository;
+import haris.hamid.ibkrbackend.data.TimeSeriesHandler;
+import haris.hamid.ibkrbackend.data.holder.ContractHolder;
+import haris.hamid.ibkrbackend.data.holder.Option;
+import haris.hamid.ibkrbackend.data.holder.PositionHolder;
+import haris.hamid.ibkrbackend.service.OrderManagerService;
+import haris.hamid.ibkrbackend.service.PositionManagerService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

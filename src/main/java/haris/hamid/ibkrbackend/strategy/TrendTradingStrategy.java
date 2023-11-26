@@ -1,25 +1,22 @@
-package haris.hamid.ibkrfacade.strategy;
+package haris.hamid.ibkrbackend.strategy;
 
 import com.ib.client.TickType;
 import com.ib.client.Types;
-import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
-import haris.hamid.ibkrfacade.data.holder.ContractHolder;
-import haris.hamid.ibkrfacade.data.holder.PositionHolder;
-import haris.hamid.ibkrfacade.data.holder.PriceHolder;
-import haris.hamid.ibkrfacade.service.ContractManagerService;
-import haris.hamid.ibkrfacade.service.OrderManagerService;
-import haris.hamid.ibkrfacade.service.PositionManagerService;
-import jakarta.annotation.PostConstruct;
+import haris.hamid.ibkrbackend.data.TimeSeriesHandler;
+import haris.hamid.ibkrbackend.data.holder.ContractHolder;
+import haris.hamid.ibkrbackend.data.holder.PositionHolder;
+import haris.hamid.ibkrbackend.data.holder.PriceHolder;
+import haris.hamid.ibkrbackend.service.ContractManagerService;
+import haris.hamid.ibkrbackend.service.OrderManagerService;
+import haris.hamid.ibkrbackend.service.PositionManagerService;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.timeseries.TSElement;
 
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Sample trading strategy, don't even think about using it real conditions!

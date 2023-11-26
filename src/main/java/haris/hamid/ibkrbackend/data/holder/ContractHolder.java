@@ -1,8 +1,8 @@
-package haris.hamid.ibkrfacade.data.holder;
+package haris.hamid.ibkrbackend.data.holder;
 
 import com.ib.client.Contract;
 import com.ib.client.ContractDetails;
-import haris.hamid.ibkrfacade.service.ContractManagerService;
+import haris.hamid.ibkrbackend.service.ContractManagerService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;

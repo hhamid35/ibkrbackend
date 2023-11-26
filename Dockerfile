@@ -2,13 +2,10 @@
 FROM maven:3.8.4-openjdk-17-slim
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /ibkrbackend
 
 # Copy the source code from GitHub into the Docker image
-COPY . /app
-
-# Set environment variables
-RUN . ./SetEnvironmentVariables.sh
+COPY . /ibkrbackend
 
 # Install TwsApi.jar
 RUN mvn install:install-file -Dfile=./lib/TwsApi.jar -DgroupId=com.ib -DartifactId=TwsApi -Dversion=1.0 -Dpackaging=jar
@@ -23,4 +20,4 @@ RUN mvn -B package --file pom.xml
 EXPOSE $SERVER_PORT
 
 # Start the application
-CMD ["java", "-jar", "/app/target/*.jar"]
+CMD ["java", "-jar", "/ibkrbackend/target/*.jar"]

@@ -1,15 +1,15 @@
-package haris.hamid.ibkrfacade.service;
+package haris.hamid.ibkrbackend.service;
 
 import com.ib.client.Contract;
 import com.ib.client.ContractDetails;
 import com.ib.client.TickType;
-import haris.hamid.ibkrfacade.TWS;
-import haris.hamid.ibkrfacade.TwsResultHolder;
-import haris.hamid.ibkrfacade.data.ContractRepository;
-import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
-import haris.hamid.ibkrfacade.data.holder.ContractHolder;
-import haris.hamid.ibkrfacade.data.holder.Option;
-import haris.hamid.ibkrfacade.data.holder.PriceHolder;
+import haris.hamid.ibkrbackend.TWS;
+import haris.hamid.ibkrbackend.TwsResultHolder;
+import haris.hamid.ibkrbackend.data.ContractRepository;
+import haris.hamid.ibkrbackend.data.TimeSeriesHandler;
+import haris.hamid.ibkrbackend.data.holder.ContractHolder;
+import haris.hamid.ibkrbackend.data.holder.Option;
+import haris.hamid.ibkrbackend.data.holder.PriceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;

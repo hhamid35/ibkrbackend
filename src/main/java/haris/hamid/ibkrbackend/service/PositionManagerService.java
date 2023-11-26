@@ -1,7 +1,7 @@
-package haris.hamid.ibkrfacade.service;
+package haris.hamid.ibkrbackend.service;
 
 import com.ib.client.Contract;
-import haris.hamid.ibkrfacade.data.holder.PositionHolder;
+import haris.hamid.ibkrbackend.data.holder.PositionHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;

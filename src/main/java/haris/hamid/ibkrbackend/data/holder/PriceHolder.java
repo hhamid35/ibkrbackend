@@ -1,4 +1,4 @@
-package haris.hamid.ibkrfacade.data.holder;
+package haris.hamid.ibkrbackend.data.holder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;

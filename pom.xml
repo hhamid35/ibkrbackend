@@ -12,10 +12,10 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <name>IBKR Facade</name>
+    <name>IBKR Backend</name>
 
     <groupId>haris.hamid</groupId>
-    <artifactId>ibkrfacade</artifactId>
+    <artifactId>ibkrbackend</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -92,7 +92,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>haris.hamid.ibkrfacade.IbkrFacadeApplication</mainClass>
+                            <mainClass>haris.hamid.ibkrbackend.IbkrBackendApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>
