@@ -15,7 +15,7 @@ FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 RUN mkdir project
 WORKDIR /home/jboss/project
 COPY pom.xml .
-COPY ./lib/TwsApi.jar .
+COPY lib/TwsApi.jar .
 RUN mvn install:install-file -Dfile=./lib/TwsApi.jar -DgroupId=com.ib -DartifactId=TwsApi -Dversion=1.0 -Dpackaging=jar
 RUN mvn dependency:go-offline
 
