@@ -16,7 +16,7 @@ RUN mkdir project
 WORKDIR /home/jboss/project
 COPY pom.xml .
 COPY lib/TwsApi.jar .
-RUN mvn install:install-file -Dfile=lib/TwsApi.jar -DgroupId=com.ib -DartifactId=TwsApi -Dversion=1.0 -Dpackaging=jar
+RUN mvn install:install-file -Dfile=TwsApi.jar -DgroupId=com.ib -DartifactId=TwsApi -Dversion=1.0 -Dpackaging=jar
 RUN mvn dependency:go-offline
 
 COPY src src
