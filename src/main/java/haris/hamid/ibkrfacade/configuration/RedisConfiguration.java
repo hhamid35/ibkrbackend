@@ -1,4 +1,4 @@
-package hu.auxin.ibkrfacade.configuration;
+package haris.hamid.ibkrfacade.configuration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

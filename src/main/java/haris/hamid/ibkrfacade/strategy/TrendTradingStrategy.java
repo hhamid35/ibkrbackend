@@ -1,14 +1,14 @@
-package hu.auxin.ibkrfacade.strategy;
+package haris.hamid.ibkrfacade.strategy;
 
 import com.ib.client.TickType;
 import com.ib.client.Types;
-import hu.auxin.ibkrfacade.data.TimeSeriesHandler;
-import hu.auxin.ibkrfacade.data.holder.ContractHolder;
-import hu.auxin.ibkrfacade.data.holder.PositionHolder;
-import hu.auxin.ibkrfacade.data.holder.PriceHolder;
-import hu.auxin.ibkrfacade.service.ContractManagerService;
-import hu.auxin.ibkrfacade.service.OrderManagerService;
-import hu.auxin.ibkrfacade.service.PositionManagerService;
+import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
+import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrfacade.data.holder.PositionHolder;
+import haris.hamid.ibkrfacade.data.holder.PriceHolder;
+import haris.hamid.ibkrfacade.service.ContractManagerService;
+import haris.hamid.ibkrfacade.service.OrderManagerService;
+import haris.hamid.ibkrfacade.service.PositionManagerService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.timeseries.TSElement;

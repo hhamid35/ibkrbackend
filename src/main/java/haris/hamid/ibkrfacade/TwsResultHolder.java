@@ -1,4 +1,4 @@
-package hu.auxin.ibkrfacade;
+package haris.hamid.ibkrfacade;
 
 import lombok.Getter;
 

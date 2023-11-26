@@ -1,9 +1,11 @@
-package hu.auxin.ibkrfacade;
+package haris.hamid.ibkrfacade;
 
 import com.ib.client.Contract;
 import com.ib.client.ContractDetails;
-import hu.auxin.ibkrfacade.data.holder.ContractHolder;
-import hu.auxin.ibkrfacade.data.holder.Option;
+import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrfacade.data.holder.Option;
+import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrfacade.data.holder.Option;
 
 import java.util.Collection;
 import java.util.List;

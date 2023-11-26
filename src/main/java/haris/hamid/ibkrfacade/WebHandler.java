@@ -1,17 +1,21 @@
-package hu.auxin.ibkrfacade;
+package haris.hamid.ibkrfacade;
 
 import com.ib.client.Contract;
 import com.ib.client.Types;
-import hu.auxin.ibkrfacade.data.holder.*;
-import hu.auxin.ibkrfacade.service.ContractManagerService;
-import hu.auxin.ibkrfacade.service.OrderManagerService;
-import hu.auxin.ibkrfacade.service.PositionManagerService;
+import haris.hamid.ibkrfacade.data.holder.*;
+import haris.hamid.ibkrfacade.service.ContractManagerService;
+import haris.hamid.ibkrfacade.service.OrderManagerService;
+import haris.hamid.ibkrfacade.service.PositionManagerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Web endpoints for accessing TWS functionality
  */
+@Slf4j
 @RestController
 @DependsOn("TWS")
 public class WebHandler {
@@ -128,5 +133,13 @@ public class WebHandler {
     @GetMapping("/optionChain/{underlyingConid}")
     Collection<Option> getOptionChain(@PathVariable int underlyingConid) {
         return contractManagerService.getOptionChainByConid(underlyingConid);
+    }
+
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<String> handleAllUncaughtException(Exception exception, WebRequest request) {
+        log.error("Uncaught Error: " + exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
     }
 }

@@ -1,8 +1,8 @@
-package hu.auxin.ibkrfacade.service;
+package haris.hamid.ibkrfacade.service;
 
 import com.ib.client.*;
-import hu.auxin.ibkrfacade.data.holder.OrderHolder;
-import hu.auxin.ibkrfacade.twssample.OrderSamples;
+import haris.hamid.ibkrfacade.data.holder.OrderHolder;
+import haris.hamid.ibkrfacade.twssample.OrderSamples;
 import org.springframework.context.annotation.Scope;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -73,7 +73,7 @@ public class OrderManagerService {
         OrderHolder orderHolder = orders.get(permId);
         if(orderHolder != null) {
             orderHolder.getOrderState().status(status);
-            orderHolder.getOrder().filledQuantity(filled);
+            orderHolder.getOrder().filledQuantity(Decimal.get(filled));
         } else {
             throw new RuntimeException("Order empty for permId=" + permId);
         }

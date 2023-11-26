@@ -1,13 +1,19 @@
-package hu.auxin.ibkrfacade;
+package haris.hamid.ibkrfacade;
 
 import com.ib.client.*;
-import hu.auxin.ibkrfacade.data.ContractRepository;
-import hu.auxin.ibkrfacade.data.TimeSeriesHandler;
-import hu.auxin.ibkrfacade.data.holder.ContractHolder;
-import hu.auxin.ibkrfacade.data.holder.Option;
-import hu.auxin.ibkrfacade.data.holder.PositionHolder;
-import hu.auxin.ibkrfacade.service.OrderManagerService;
-import hu.auxin.ibkrfacade.service.PositionManagerService;
+import haris.hamid.ibkrfacade.data.ContractRepository;
+import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
+import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrfacade.data.holder.Option;
+import haris.hamid.ibkrfacade.data.holder.PositionHolder;
+import haris.hamid.ibkrfacade.service.OrderManagerService;
+import haris.hamid.ibkrfacade.data.ContractRepository;
+import haris.hamid.ibkrfacade.data.TimeSeriesHandler;
+import haris.hamid.ibkrfacade.data.holder.ContractHolder;
+import haris.hamid.ibkrfacade.data.holder.Option;
+import haris.hamid.ibkrfacade.data.holder.PositionHolder;
+import haris.hamid.ibkrfacade.service.OrderManagerService;
+import haris.hamid.ibkrfacade.service.PositionManagerService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -153,6 +159,8 @@ public final class TWS implements EWrapper, TwsHandler {
         }
     }
 
+
+
     // ! [tickprice]
     @Override
     public void tickPrice(int tickerId, int field, double price, TickAttrib attribs) {
@@ -164,47 +172,35 @@ public final class TWS implements EWrapper, TwsHandler {
             log.debug("Skip tick type {}", tickType);
         }
     }
-    // ! [tickprice]
 
-    // ! [ticksize]
     @Override
-    public void tickSize(int tickerId, int field, int size) {
-        TickType tickType = TickType.get(field);
-        // log.info("Tick Size. Ticker Id:" + tickerId + ", Field: " + tickType + ",
-        // Size: " + size);
+    public void tickSize(int tickerId, int field, Decimal size) {
+        log.info("Tick Size. Ticker Id:" + tickerId + ", Field: " + field + "Size: " + size);
     }
-    // ! [ticksize]
 
-    // ! [tickoptioncomputation]
     @Override
-    public void tickOptionComputation(int tickerId, int field,
+    public void tickOptionComputation(int tickerId, int field, int i,
             double impliedVol, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta,
             double undPrice) {
-        log.info("TickOptionComputation. TickerId: " + tickerId + ", field: " + field + ", ImpliedVolatility: "
+        log.info("TickOptionComputation. TickerId: " + tickerId + ", field: " + field + ", i: " + i + ", ImpliedVolatility: "
                 + impliedVol + ", Delta: " + delta
                 + ", OptionPrice: " + optPrice + ", pvDividend: " + pvDividend + ", Gamma: " + gamma + ", Vega: " + vega
                 + ", Theta: " + theta + ", UnderlyingPrice: " + undPrice);
     }
-    // ! [tickoptioncomputation]
 
-    // ! [tickgeneric]
     @Override
     public void tickGeneric(int tickerId, int tickType, double value) {
         log.info("Tick Generic. Ticker Id:" + tickerId + ", Field: " + TickType.getField(tickType) + ", Value: "
                 + value);
     }
-    // ! [tickgeneric]
 
-    // ! [tickstring]
     @Override
     public void tickString(int tickerId, int tickType, String value) {
         TickType type = TickType.get(tickType);
-        // log.info("Tick string. Ticker Id:" + tickerId + ", Type: " + type.name() + ",
-        // Value: " + value);
+         log.info("Tick string. Ticker Id:" + tickerId + ", Type: " + type.name() + ", Value: " + value);
     }
 
-    // ! [tickstring]
     @Override
     public void tickEFP(int tickerId, int tickType, double basisPoints,
             String formattedBasisPoints, double impliedFuture, int holdDays,
@@ -217,40 +213,31 @@ public final class TWS implements EWrapper, TwsHandler {
                 ", DividendImpact: " + dividendImpact + ", DividendsToLastTradeDate: " + dividendsToLastTradeDate);
     }
 
-    // ! [orderstatus]
     @Override
-    public void orderStatus(int orderId, String status, double filled,
-            double remaining, double avgFillPrice, int permId, int parentId,
+    public void orderStatus(int orderId, String status, Decimal filled,
+                            Decimal remaining, double avgFillPrice, int permId, int parentId,
             double lastFillPrice, int clientId, String whyHeld, double mktCapPrice) {
-        orderManagerService.changeOrderStatus(permId, status, filled, remaining, avgFillPrice, lastFillPrice);
+        orderManagerService.changeOrderStatus(permId, status, filled.value().doubleValue(), remaining.value().doubleValue(), avgFillPrice, lastFillPrice);
     }
-    // ! [orderstatus]
 
-    // ! [openorder]
     @Override
     public void openOrder(int orderId, Contract contract, Order order, OrderState orderState) {
         orderManagerService.setOrder(contract, order, orderState);
     }
-    // ! [openorder]
 
-    // ! [openorderend]
     @Override
     public void openOrderEnd() {
         log.info("Order list retrieved");
     }
-    // ! [openorderend]
 
-    // ! [updateaccountvalue]
     @Override
     public void updateAccountValue(String key, String value, String currency, String accountName) {
         log.info("UpdateAccountValue. Key: " + key + ", Value: " + value + ", Currency: " + currency + ", AccountName: "
                 + accountName);
     }
-    // ! [updateaccountvalue]
 
-    // ! [updateportfolio]
     @Override
-    public void updatePortfolio(Contract contract, double position,
+    public void updatePortfolio(Contract contract, Decimal position,
             double marketPrice, double marketValue, double averageCost,
             double unrealizedPNL, double realizedPNL, String accountName) {
         log.info("UpdatePortfolio. " + contract.symbol() + ", " + contract.secType() + " @ " + contract.exchange()
@@ -259,49 +246,37 @@ public final class TWS implements EWrapper, TwsHandler {
                 + ", UnrealizedPNL: " + unrealizedPNL + ", RealizedPNL: " + realizedPNL + ", AccountName: "
                 + accountName);
     }
-    // ! [updateportfolio]
 
-    // ! [updateaccounttime]
     @Override
     public void updateAccountTime(String timeStamp) {
         log.info("UpdateAccountTime. Time: " + timeStamp + "\n");
     }
-    // ! [updateaccounttime]
 
-    // ! [accountdownloadend]
     @Override
     public void accountDownloadEnd(String accountName) {
         log.info("Account download finished: " + accountName + "\n");
     }
-    // ! [accountdownloadend]
 
-    // ! [nextvalidid]
     @Override
     public void nextValidId(int orderId) {
         this.orderManagerService.setOrderId(orderId);
     }
-    // ! [nextvalidid]
 
-    // ! [contractdetails]
     @Override
     public void contractDetails(int reqId, ContractDetails contractDetails) {
         twsResultHandler.setResult(reqId, new TwsResultHolder<ContractDetails>(contractDetails));
     }
 
-    // ! [contractdetails]
     @Override
     public void bondContractDetails(int reqId, ContractDetails contractDetails) {
         log.info(EWrapperMsgGenerator.bondContractDetails(reqId, contractDetails));
     }
 
-    // ! [contractdetailsend]
     @Override
     public void contractDetailsEnd(int reqId) {
         log.info("ContractDetailsEnd. " + reqId + "\n");
     }
-    // ! [contractdetailsend]
 
-    // ! [execdetails]
     @Override
     public void execDetails(int reqId, Contract contract, Execution execution) {
         log.info("ExecDetails. " + reqId + " - [" + contract.symbol() + "], [" + contract.secType() + "], ["
@@ -309,79 +284,59 @@ public final class TWS implements EWrapper, TwsHandler {
                 "], [" + execution.orderId() + "], [" + execution.shares() + "]" + ", [" + execution.lastLiquidity()
                 + "]");
     }
-    // ! [execdetails]
 
-    // ! [execdetailsend]
     @Override
     public void execDetailsEnd(int reqId) {
         log.info("ExecDetailsEnd. " + reqId + "\n");
     }
-    // ! [execdetailsend]
 
-    // ! [updatemktdepth]
     @Override
     public void updateMktDepth(int tickerId, int position, int operation,
-            int side, double price, int size) {
+            int side, double price, Decimal size) {
         log.info("UpdateMarketDepth. " + tickerId + " - Position: " + position + ", Operation: " + operation
-                + ", Side: " + side + ", Price: " + price + ", Size: " + size + "");
+                + ", Side: " + side + ", Price: " + price + ", Size: " + size + "\n");
     }
-    // ! [updatemktdepth]
 
-    // ! [updatemktdepthl2]
     @Override
     public void updateMktDepthL2(int tickerId, int position, String marketMaker, int operation, int side, double price,
-            int size, boolean isSmartDepth) {
+                                 Decimal size, boolean isSmartDepth) {
         log.info("UpdateMarketDepthL2. " + tickerId + " - Position: " + position + ", Operation: " + operation
                 + ", Side: " + side + ", Price: " + price + ", Size: " + size + ", isSmartDepth: " + isSmartDepth);
     }
-    // ! [updatemktdepthl2]
 
-    // ! [updatenewsbulletin]
     @Override
     public void updateNewsBulletin(int msgId, int msgType, String message, String origExchange) {
         log.info("News Bulletins. " + msgId + " - Type: " + msgType + ", Message: " + message + ", Exchange of Origin: "
                 + origExchange + "\n");
     }
-    // ! [updatenewsbulletin]
 
-    // ! [managedaccounts]
     @Override
     public void managedAccounts(String accountsList) {
         log.info("Account list: " + accountsList);
     }
-    // ! [managedaccounts]
 
-    // ! [receivefa]
     @Override
     public void receiveFA(int faDataType, String xml) {
         log.info("Receiving FA: " + faDataType + " - " + xml);
     }
-    // ! [receivefa]
 
-    // ! [historicaldata]
     @Override
     public void historicalData(int reqId, Bar bar) {
         log.info("HistoricalData. " + reqId + " - Date: " + bar.time() + ", Open: " + bar.open() + ", High: "
                 + bar.high() + ", Low: " + bar.low() + ", Close: " + bar.close() + ", Volume: " + bar.volume()
                 + ", Count: " + bar.count() + ", WAP: " + bar.wap());
     }
-    // ! [historicaldata]
 
-    // ! [historicaldataend]
     @Override
     public void historicalDataEnd(int reqId, String startDateStr, String endDateStr) {
         log.info("HistoricalDataEnd. " + reqId + " - Start Date: " + startDateStr + ", End Date: " + endDateStr);
     }
-    // ! [historicaldataend]
 
-    // ! [scannerparameters]
     @Override
     public void scannerParameters(String xml) {
         log.info("ScannerParameters. " + xml + "\n");
     }
-    // ! [scannerparameters]
 
-    // ! [scannerdata]
     @Override
     public void scannerData(int reqId, int rank,
             ContractDetails contractDetails, String distance, String benchmark,
@@ -392,92 +347,71 @@ public final class TWS implements EWrapper, TwsHandler {
                 + ", Distance: " + distance + ", Benchmark: " + benchmark + ", Projection: " + projection
                 + ", Legs String: " + legsStr);
     }
-    // ! [scannerdata]
 
-    // ! [scannerdataend]
     @Override
     public void scannerDataEnd(int reqId) {
         log.info("ScannerDataEnd. " + reqId);
     }
-    // ! [scannerdataend]
 
-    // ! [realtimebar]
     @Override
-    public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume,
-            double wap, int count) {
+    public void realtimeBar(int reqId, long time, double open, double high, double low, double close, Decimal volume,
+                            Decimal wap, int count) {
         log.info("RealTimeBars. " + reqId + " - Time: " + time + ", Open: " + open + ", High: " + high + ", Low: " + low
                 + ", Close: " + close + ", Volume: " + volume + ", Count: " + count + ", WAP: " + wap);
     }
 
-    // ! [realtimebar]
     @Override
     public void currentTime(long time) {
         log.info("currentTime");
     }
 
-    // ! [fundamentaldata]
     @Override
     public void fundamentalData(int reqId, String data) {
         log.info("FundamentalData. ReqId: [" + reqId + "] - Data: [" + data + "]");
     }
 
-    // ! [fundamentaldata]
     @Override
     public void deltaNeutralValidation(int reqId, DeltaNeutralContract deltaNeutralContract) {
         log.info("deltaNeutralValidation");
     }
 
-    // ! [ticksnapshotend]
     @Override
     public void tickSnapshotEnd(int reqId) {
         log.info("TickSnapshotEnd: " + reqId);
     }
-    // ! [ticksnapshotend]
 
-    // ! [marketdatatype]
     @Override
     public void marketDataType(int reqId, int marketDataType) {
         log.info("MarketDataType. [" + reqId + "], Type: [" + marketDataType + "]\n");
     }
-    // ! [marketdatatype]
 
-    // ! [commissionreport]
     @Override
     public void commissionReport(CommissionReport commissionReport) {
         log.info("CommissionReport. [" + commissionReport.execId() + "] - [" + commissionReport.commission() + "] ["
                 + commissionReport.currency() + "] RPNL [" + commissionReport.realizedPNL() + "]");
     }
-    // ! [commissionreport]
 
-    // ! [position]
     @Override
-    public void position(String account, Contract contract, double pos, double avgCost) {
-        positionManagerService.addPosition(new PositionHolder(contract, pos, avgCost));
+    public void position(String account, Contract contract, Decimal pos, double avgCost) {
+        positionManagerService.addPosition(new PositionHolder(contract, pos.value().doubleValue(), avgCost));
     }
-    // ! [position]
 
-    // ! [positionend]
     @Override
     public void positionEnd() {
         log.info("Position list retrieved");
     }
-    // ! [positionend]
 
-    // ! [accountsummary]
     @Override
     public void accountSummary(int reqId, String account, String tag, String value, String currency) {
         log.info("Acct Summary. ReqId: " + reqId + ", Acct: " + account + ", Tag: " + tag + ", Value: " + value
                 + ", Currency: " + currency);
     }
-    // ! [accountsummary]
 
-    // ! [accountsummaryend]
     @Override
     public void accountSummaryEnd(int reqId) {
         log.info("AccountSummaryEnd. Req Id: " + reqId + "\n");
     }
 
-    // ! [accountsummaryend]
     @Override
     public void verifyMessageAPI(String apiData) {
         log.info("verifyMessageAPI");
@@ -498,53 +432,41 @@ public final class TWS implements EWrapper, TwsHandler {
         log.info("verifyAndAuthCompleted");
     }
 
-    // ! [displaygrouplist]
     @Override
     public void displayGroupList(int reqId, String groups) {
         log.info("Display Group List. ReqId: " + reqId + ", Groups: " + groups + "\n");
     }
-    // ! [displaygrouplist]
 
-    // ! [displaygroupupdated]
     @Override
     public void displayGroupUpdated(int reqId, String contractInfo) {
         log.info("Display Group Updated. ReqId: " + reqId + ", Contract info: " + contractInfo + "\n");
     }
 
-    // ! [positionmulti]
     @Override
-    public void positionMulti(int reqId, String account, String modelCode, Contract contract, double pos,
+    public void positionMulti(int reqId, String account, String modelCode, Contract contract, Decimal pos,
             double avgCost) {
         log.info("Position Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " + modelCode
                 + ", Symbol: " + contract.symbol() + ", SecType: " + contract.secType() + ", Currency: "
                 + contract.currency() + ", Position: " + pos + ", Avg cost: " + avgCost + "\n");
     }
-    // ! [positionmulti]
 
-    // ! [positionmultiend]
     @Override
     public void positionMultiEnd(int reqId) {
         log.info("Position Multi End. Request: " + reqId + "\n");
     }
-    // ! [positionmultiend]
 
-    // ! [accountupdatemulti]
     @Override
     public void accountUpdateMulti(int reqId, String account, String modelCode, String key, String value,
             String currency) {
         log.info("Account Update Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " + modelCode
                 + ", Key: " + key + ", Value: " + value + ", Currency: " + currency + "\n");
     }
-    // ! [accountupdatemulti]
 
-    // ! [accountupdatemultiend]
     @Override
     public void accountUpdateMultiEnd(int reqId) {
         log.info("Account Update Multi End. Request: " + reqId + "\n");
     }
-    // ! [accountupdatemultiend]
 
-    // ! [securityDefinitionOptionParameter]
     @Override
     public void securityDefinitionOptionalParameter(int reqId, String exchange, int underlyingConId,
             String tradingClass, String multiplier, Set<String> expirations, Set<Double> strikes) {
@@ -567,9 +489,7 @@ public final class TWS implements EWrapper, TwsHandler {
         underlyingContractHolder.setOptionChainRequestId(reqId);
         contractRepository.save(underlyingContractHolder);
     }
-    // ! [securityDefinitionOptionParameter]
 
-    // ! [securityDefinitionOptionParameterEnd]
     @Override
     public void securityDefinitionOptionalParameterEnd(int reqId) {
         ContractHolder underlying = contractRepository.findContractHolderByOptionChainRequestId(reqId);
@@ -587,18 +507,14 @@ public final class TWS implements EWrapper, TwsHandler {
             log.info("tier: " + tier.toString() + ", ");
         }
     }
-    // ! [softDollarTiers]
 
-    // ! [familyCodes]
     @Override
     public void familyCodes(FamilyCode[] familyCodes) {
         for (FamilyCode fc : familyCodes) {
             log.info("Family Code. AccountID: " + fc.accountID() + ", FamilyCode: " + fc.familyCodeStr());
         }
     }
-    // ! [familyCodes]
 
-    // ! [symbolSamples]
     @Override
     public void symbolSamples(int reqId, ContractDescription[] contractDescriptions) {
         List<Contract> resultList = new ArrayList<>();
@@ -607,9 +523,7 @@ public final class TWS implements EWrapper, TwsHandler {
         }
         twsResultHandler.setResult(reqId, new TwsResultHolder(resultList));
     }
-    // ! [symbolSamples]
 
-    // ! [mktDepthExchanges]
     @Override
     public void mktDepthExchanges(DepthMktDataDescription[] depthMktDataDescriptions) {
         for (DepthMktDataDescription depthMktDataDescription : depthMktDataDescriptions) {
@@ -620,18 +534,14 @@ public final class TWS implements EWrapper, TwsHandler {
                     ", AggGroup: " + depthMktDataDescription.aggGroup());
         }
     }
-    // ! [mktDepthExchanges]
 
-    // ! [tickNews]
     @Override
     public void tickNews(int tickerId, long timeStamp, String providerCode, String articleId, String headline,
             String extraData) {
         log.info("Tick News. TickerId: " + tickerId + ", TimeStamp: " + timeStamp + ", ProviderCode: " + providerCode
                 + ", ArticleId: " + articleId + ", Headline: " + headline + ", ExtraData: " + extraData + "\n");
     }
-    // ! [tickNews]
 
-    // ! [smartcomponents]
     @Override
     public void smartComponents(int reqId, Map<Integer, Map.Entry<String, Character>> theMap) {
         log.info("smart components req id:" + reqId);
@@ -641,17 +551,13 @@ public final class TWS implements EWrapper, TwsHandler {
                     ", exchange: " + item.getValue().getKey() + ", exchange letter: " + item.getValue().getValue());
         }
     }
-    // ! [smartcomponents]
 
-    // ! [tickReqParams]
     @Override
     public void tickReqParams(int tickerId, double minTick, String bboExchange, int snapshotPermissions) {
         log.info("Tick req params. Ticker Id:" + tickerId + ", Min tick: " + minTick + ", bbo exchange: " + bboExchange
                 + ", Snapshot permissions: " + snapshotPermissions);
     }
-    // ! [tickReqParams]
 
-    // ! [newsProviders]
     @Override
     public void newsProviders(NewsProvider[] newsProviders) {
         for (NewsProvider np : newsProviders) {
@@ -659,69 +565,51 @@ public final class TWS implements EWrapper, TwsHandler {
                     + "\n");
         }
     }
-    // ! [newsProviders]
 
-    // ! [newsArticle]
     @Override
     public void newsArticle(int requestId, int articleType, String articleText) {
         log.info("News Article. Request Id: " + requestId + ", ArticleType: " + articleType +
                 ", ArticleText: " + articleText);
     }
-    // ! [newsArticle]
 
-    // ! [historicalNews]
     @Override
     public void historicalNews(int requestId, String time, String providerCode, String articleId, String headline) {
         log.info("Historical News. RequestId: " + requestId + ", Time: " + time + ", ProviderCode: " + providerCode
                 + ", ArticleId: " + articleId + ", Headline: " + headline + "\n");
     }
-    // ! [historicalNews]
 
-    // ! [historicalNewsEnd]
     @Override
     public void historicalNewsEnd(int requestId, boolean hasMore) {
         log.info("Historical News End. RequestId: " + requestId + ", HasMore: " + hasMore + "\n");
     }
-    // ! [historicalNewsEnd]
 
-    // ! [headTimestamp]
     @Override
     public void headTimestamp(int reqId, String headTimestamp) {
         log.info("Head timestamp. Req Id: " + reqId + ", headTimestamp: " + headTimestamp);
     }
-    // ! [headTimestamp]
 
-    // ! [histogramData]
     @Override
     public void histogramData(int reqId, List<HistogramEntry> items) {
         log.info(EWrapperMsgGenerator.histogramData(reqId, items));
     }
-    // ! [histogramData]
 
-    // ! [historicalDataUpdate]
     @Override
     public void historicalDataUpdate(int reqId, Bar bar) {
         log.info("HistoricalDataUpdate. " + reqId + " - Date: " + bar.time() + ", Open: " + bar.open() + ", High: "
                 + bar.high() + ", Low: " + bar.low() + ", Close: " + bar.close() + ", Volume: " + bar.volume()
                 + ", Count: " + bar.count() + ", WAP: " + bar.wap());
     }
-    // ! [historicalDataUpdate]
 
-    // ! [rerouteMktDataReq]
     @Override
     public void rerouteMktDataReq(int reqId, int conId, String exchange) {
         log.info(EWrapperMsgGenerator.rerouteMktDataReq(reqId, conId, exchange));
     }
-    // ! [rerouteMktDataReq]
 
-    // ! [rerouteMktDepthReq]
     @Override
     public void rerouteMktDepthReq(int reqId, int conId, String exchange) {
         log.info(EWrapperMsgGenerator.rerouteMktDepthReq(reqId, conId, exchange));
     }
-    // ! [rerouteMktDepthReq]
 
-    // ! [marketRule]
     @Override
     public void marketRule(int marketRuleId, PriceIncrement[] priceIncrements) {
         DecimalFormat df = new DecimalFormat("#.#");
@@ -732,32 +620,24 @@ public final class TWS implements EWrapper, TwsHandler {
                     + df.format(pi.increment()));
         }
     }
-    // ! [marketRule]
 
-    // ! [pnl]
     @Override
     public void pnl(int reqId, double dailyPnL, double unrealizedPnL, double realizedPnL) {
         log.info(EWrapperMsgGenerator.pnl(reqId, dailyPnL, unrealizedPnL, realizedPnL));
     }
-    // ! [pnl]
 
-    // ! [pnlsingle]
     @Override
-    public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL, double realizedPnL, double value) {
+    public void pnlSingle(int reqId, Decimal pos, double dailyPnL, double unrealizedPnL, double realizedPnL, double value) {
         log.info(EWrapperMsgGenerator.pnlSingle(reqId, pos, dailyPnL, unrealizedPnL, realizedPnL, value));
     }
-    // ! [pnlsingle]
 
-    // ! [historicalticks]
     @Override
     public void historicalTicks(int reqId, List<HistoricalTick> ticks, boolean done) {
         for (HistoricalTick tick : ticks) {
             log.info(EWrapperMsgGenerator.historicalTick(reqId, tick.time(), tick.price(), tick.size()));
         }
     }
-    // ! [historicalticks]
 
-    // ! [historicalticksbidask]
     @Override
     public void historicalTicksBidAsk(int reqId, List<HistoricalTickBidAsk> ticks, boolean done) {
         for (HistoricalTickBidAsk tick : ticks) {
@@ -766,10 +646,8 @@ public final class TWS implements EWrapper, TwsHandler {
                     tick.sizeAsk()));
         }
     }
-    // ! [historicalticksbidask]
 
     @Override
-    // ! [historicaltickslast]
     public void historicalTicksLast(int reqId, List<HistoricalTickLast> ticks, boolean done) {
         for (HistoricalTickLast tick : ticks) {
             log.info(EWrapperMsgGenerator.historicalTickLast(reqId, tick.time(), tick.tickAttribLast(), tick.price(),
@@ -777,56 +655,64 @@ public final class TWS implements EWrapper, TwsHandler {
                     tick.specialConditions()));
         }
     }
-    // ! [historicaltickslast]
 
-    // ! [tickbytickalllast]
     @Override
-    public void tickByTickAllLast(int reqId, int tickType, long time, double price, int size,
-            TickAttribLast tickAttribLast,
-            String exchange, String specialConditions) {
+    public void tickByTickAllLast(int reqId, int tickType, long time, double price, Decimal size, TickAttribLast tickAttribLast, String exchange, String specialConditions) {
         log.info(EWrapperMsgGenerator.tickByTickAllLast(reqId, tickType, time, price, size, tickAttribLast, exchange,
                 specialConditions));
     }
-    // ! [tickbytickalllast]
 
-    // ! [tickbytickbidask]
     @Override
-    public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice, int bidSize, int askSize,
-            TickAttribBidAsk tickAttribBidAsk) {
+    public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice, Decimal bidSize, Decimal askSize, TickAttribBidAsk tickAttribBidAsk) {
         timeSeriesHandler.addToStream(reqId, bidPrice, TickType.BID);
         timeSeriesHandler.addToStream(reqId, askPrice, TickType.ASK);
     }
-    // ! [tickbytickbidask]
 
-    // ! [tickbytickmidpoint]
     @Override
     public void tickByTickMidPoint(int reqId, long time, double midPoint) {
         log.info(EWrapperMsgGenerator.tickByTickMidPoint(reqId, time, midPoint));
     }
-    // ! [tickbytickmidpoint]
 
-    // ! [orderbound]
     @Override
     public void orderBound(long orderId, int apiClientId, int apiOrderId) {
         log.info(EWrapperMsgGenerator.orderBound(orderId, apiClientId, apiOrderId));
     }
-    // ! [orderbound]
 
-    // ! [completedorder]
     @Override
     public void completedOrder(Contract contract, Order order, OrderState orderState) {
         log.info(EWrapperMsgGenerator.completedOrder(contract, order, orderState));
     }
-    // ! [completedorder]
 
-    // ! [completedordersend]
     @Override
     public void completedOrdersEnd() {
         log.info(EWrapperMsgGenerator.completedOrdersEnd());
     }
-    // ! [completedordersend]
 
-    // ! [displaygroupupdated]
+    @Override
+    public void replaceFAEnd(int i, String s) {
+
+    }
+
+    @Override
+    public void wshMetaData(int i, String s) {
+
+    }
+
+    @Override
+    public void wshEventData(int i, String s) {
+
+    }
+
+    @Override
+    public void historicalSchedule(int i, String s, String s1, String s2, List<HistoricalSession> list) {
+
+    }
+
+    @Override
+    public void userInfo(int i, String s) {
+
+    }
+
     @Override
     public void error(Exception e) {
         log.error(e.getMessage());
@@ -837,14 +723,12 @@ public final class TWS implements EWrapper, TwsHandler {
         log.error(str);
     }
 
-    // ! [error]
     @Override
-    public void error(int id, int errorCode, String errorMsg) {
-        log.error("Error id: {}; Code: {}: {}", id, errorCode, errorMsg);
+    public void error(int id, int errorCode, String errorMsg, String s) {
+        log.error("Error id: {}; Code: {}: {} {}", id, errorCode, errorMsg, s);
         twsResultHandler.setResult(id, new TwsResultHolder("Error code: " + errorCode + "; " + errorMsg));
     }
 
-    // ! [error]
     @Override
     public void connectionClosed() {
         log.info("Connection closed");

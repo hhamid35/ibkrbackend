@@ -1,7 +1,8 @@
-package hu.auxin.ibkrfacade.data.holder;
+package haris.hamid.ibkrfacade.data.holder;
 
 import com.ib.client.Contract;
 import com.ib.client.ContractDetails;
+import haris.hamid.ibkrfacade.service.ContractManagerService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,7 @@ public class ContractHolder implements Serializable {
      * Available options for the underlying asset. The system won't fill the option chain automatically,
      * you have to request for the available option chain first.
      *
-     * @see hu.auxin.ibkrfacade.service.ContractManagerService#getOptionChainByConid(int)
+     * @see ContractManagerService#getOptionChainByConid(int)
      */
     private Set<Option> optionChain = new HashSet<>();
 

@@ -1,22 +1,12 @@
 /* Copyright (C) 2019 Interactive Brokers LLC. All rights reserved. This code is subject to the terms
  * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable. */
 
-package hu.auxin.ibkrfacade.twssample;
+package haris.hamid.ibkrfacade.twssample;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.ib.client.VolumeCondition;
-import com.ib.client.TimeCondition;
-import com.ib.client.PercentChangeCondition;
-import com.ib.client.MarginCondition;
-import com.ib.client.ExecutionCondition;
-import com.ib.client.PriceCondition;
-import com.ib.client.Order;
-import com.ib.client.OrderComboLeg;
-import com.ib.client.OrderCondition;
-import com.ib.client.OrderConditionType;
-import com.ib.client.OrderType;
-import com.ib.client.TagValue;
+
+import com.ib.client.*;
 
 public class OrderSamples {
 	
@@ -26,7 +16,7 @@ public class OrderSamples {
 		order.action(action);
 		order.tif("AUC");
 		order.orderType("MTL");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(price);
 		//! [auction]
 		return order;
@@ -37,7 +27,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(price);
 		order.discretionaryAmt(discretionaryAmt);
 		//! [discretionary]
@@ -49,7 +39,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MKT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		//! [market]
 		return order;
 	}
@@ -59,7 +49,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MIT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.auxPrice(price);
 		//! [market_if_touched]
 		return order;
@@ -70,7 +60,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MOC");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		//! [market_on_close]
 		return order;
 	}
@@ -80,7 +70,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MKT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.tif("OPG");
 		//! [market_on_open]
 		return order;
@@ -91,7 +81,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MKT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		//! [midpoint_match]
 		return order;
 	}
@@ -101,7 +91,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MIDPRICE");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(priceCap); // optional
 		//! [midprice]
 		return order;
@@ -112,7 +102,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("PEG MKT");
-		order.totalQuantity(100);
+		order.totalQuantity(Decimal.get(100));
 		order.auxPrice(marketOffset);//Offset price
 		//! [pegged_market]
 		return order;
@@ -123,7 +113,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("PEG STK");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.delta(delta);
 		order.stockRefPrice(stockReferencePrice);
 		order.startingPrice(startingPrice);
@@ -136,7 +126,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("REL");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(priceCap);
 		order.auxPrice(offsetAmount);
 		//! [relative_pegged_primary]
@@ -148,7 +138,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(price);
 		order.sweepToFill(true);
 		//! [sweep_to_fill]
@@ -160,7 +150,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(price);
 		order.auctionStrategy(auctionStrategy);
 		//! [auction_limit]
@@ -172,7 +162,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("PEG STK");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.delta(delta);
 		order.startingPrice(startingPrice);
 		//! [auction_pegged_stock]
@@ -184,7 +174,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("REL");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.auxPrice(offset);
 		//! [auction_relative]
 		return order;
@@ -195,7 +185,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);//Large volumes!
+		order.totalQuantity(Decimal.get(quantity));//Large volumes!
 		order.lmtPrice(price);
 		order.blockOrder(true);
 		// ! [block]
@@ -207,7 +197,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("BOX TOP");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [boxtop]
 		return order;
 	}
@@ -217,7 +207,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 		// ! [limitorder]
 		return order;
@@ -232,7 +222,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 		order.cashQty(cashQty);
 		// ! [limitorderwithcashqty]
@@ -245,7 +235,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LIT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 		order.auxPrice(triggerPrice);
 		// ! [limitiftouched]
@@ -257,7 +247,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LOC");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 		// ! [limitonclose]
 		return order;
@@ -269,7 +259,7 @@ public class OrderSamples {
 		order.action(action);
 		order.tif("OPG");
 		order.orderType("LOC");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 		// ! [limitonopen]
 		return order;
@@ -280,7 +270,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("PASSV REL");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.auxPrice(offset);
 		// ! [passive_relative]
 		return order;
@@ -291,7 +281,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("PEG MID");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.auxPrice(offset);
 		order.lmtPrice(limitPrice);
 		// ! [pegged_midpoint]
@@ -305,7 +295,7 @@ public class OrderSamples {
 		parent.orderId(parentOrderId);
 		parent.action(action);
 		parent.orderType("LMT");
-		parent.totalQuantity(quantity);
+		parent.totalQuantity(Decimal.get(quantity));
 		parent.lmtPrice(limitPrice);
 		//The parent and children orders will need this attribute set to false to prevent accidental executions.
         //The LAST CHILD will have it set to true.
@@ -315,7 +305,7 @@ public class OrderSamples {
 		takeProfit.orderId(parent.orderId() + 1);
 		takeProfit.action(action.equals("BUY") ? "SELL" : "BUY");
 		takeProfit.orderType("LMT");
-		takeProfit.totalQuantity(quantity);
+		takeProfit.totalQuantity(Decimal.get(quantity));
 		takeProfit.lmtPrice(takeProfitLimitPrice);
 		takeProfit.parentId(parentOrderId);
 		takeProfit.transmit(false);
@@ -326,7 +316,7 @@ public class OrderSamples {
 		stopLoss.orderType("STP");
 		//Stop trigger price
 		stopLoss.auxPrice(stopLossPrice);
-		stopLoss.totalQuantity(quantity);
+		stopLoss.totalQuantity(Decimal.get(quantity));
 		stopLoss.parentId(parentOrderId);
 		//In this case, the low side order will be the last child being sent. Therefore, it needs to set this attribute to true 
         //to activate all its predecessors
@@ -346,7 +336,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MTL");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [markettolimit]
 		return order;
 	}
@@ -356,7 +346,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MKT PRT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [marketwithprotection]
 		return order;
 	}
@@ -367,7 +357,7 @@ public class OrderSamples {
 		order.action(action);
 		order.orderType("STP");
 		order.auxPrice(stopPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [stop]
 		return order;
 	}
@@ -379,7 +369,7 @@ public class OrderSamples {
 		order.orderType("STP LMT");
 		order.lmtPrice(limitPrice);
 		order.auxPrice(stopPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [stoplimit]
 		return order;
 	}
@@ -390,7 +380,7 @@ public class OrderSamples {
 		order.action(action);
 		order.orderType("STP PRT");
 		order.auxPrice(stopPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [stopwithprotection]
 		return order;
 	}
@@ -402,7 +392,7 @@ public class OrderSamples {
 		order.orderType("TRAIL");
 		order.trailingPercent(trailingPercent);
 		order.trailStopPrice(trailStopPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [trailingstop]
 		return order;
 	}
@@ -415,7 +405,7 @@ public class OrderSamples {
 		order.lmtPriceOffset(lmtPriceOffset);
 		order.auxPrice(trailingAmount);
 		order.trailStopPrice(trailStopPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [trailingstoplimit]
 		return order;
 	}
@@ -426,7 +416,7 @@ public class OrderSamples {
 		order.action(action);
 		order.orderType("LMT");
 		order.lmtPrice(limitPrice);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		if (nonGuaranteed)
 		{
 			order.smartComboRoutingParams().add(new TagValue("NonGuaranteed", "1"));
@@ -440,7 +430,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("MKT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		if (nonGuaranteed)
 		{
 			order.smartComboRoutingParams().add(new TagValue("NonGuaranteed", "1"));
@@ -454,7 +444,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.orderComboLegs(new ArrayList<>());
 		
 		for(double price : legPrices) {
@@ -476,7 +466,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("REL + LMT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		order.lmtPrice(limitPrice);
 
 		if (nonGuaranteed)
@@ -492,7 +482,7 @@ public class OrderSamples {
 		Order order = new Order();
 		order.action(action);
 		order.orderType("REL + MKT");
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		if (nonGuaranteed)
 		{
 			order.smartComboRoutingParams().add(new TagValue("NonGuaranteed", "1"));
@@ -519,7 +509,7 @@ public class OrderSamples {
 		order.orderType("VOL");
 		order.volatility(volatilityPercent);//Expressed in percentage (40%)
 		order.volatilityType(volatilityType);// 1=daily, 2=annual
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		// ! [volatility]
 		return order;
 	}
@@ -541,7 +531,7 @@ public class OrderSamples {
 		order.orderType("PEG BENCH");
 		//BUY or SELL
 		order.action(action);
-		order.totalQuantity(quantity);
+		order.totalQuantity(Decimal.get(quantity));
 		//Beginning with price...
 		order.startingPrice(startingPrice);
 		//increase/decrease price...

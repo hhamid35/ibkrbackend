@@ -1,4 +1,4 @@
-package hu.auxin.ibkrfacade.data;
+package haris.hamid.ibkrfacade.data;
 
 import com.ib.client.Contract;
 import com.ib.client.TickType;
