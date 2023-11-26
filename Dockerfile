@@ -1,6 +1,9 @@
 # Use a base image that includes Maven and OpenJDK
 FROM maven:3.8.4-openjdk-17-slim
 
+# Set environment variables
+RUN . ./SetEnvironmentVariables.sh
+
 # Set the working directory
 WORKDIR $APP_DIRECTORY
 
