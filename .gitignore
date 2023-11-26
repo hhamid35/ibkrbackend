@@ -3,3 +3,4 @@
 /out/
 /target/
 /ibkrfacade.iml
+/src/main/resources/application.properties
