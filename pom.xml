@@ -33,14 +33,6 @@
         </repository>
     </repositories>
 
-         <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/hhamid35/ibkrbackend</url>
-    </repository>
-  </distributionManagement>
-
     <dependencies>
 
         <dependency>
@@ -105,28 +97,6 @@
                     </execution>
                 </executions>
             </plugin>
-         <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>com.javabyexamples.java.jar.HelloWorld</mainClass>
-                    </manifest>
-                </archive>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
         </plugins>
     </build>
 </project>
